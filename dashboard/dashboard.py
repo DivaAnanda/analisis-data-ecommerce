@@ -188,19 +188,12 @@ with tab1:
     st.subheader("Top 10 Kategori Produk")
     st.info("📝 Data kategori produk dihitung berdasarkan seluruh dataset (tidak dipengaruhi filter tanggal).")
 
-    # Load order_items and products for category analysis
     @st.cache_data
     def get_category_data():
-        order_items = pd.read_csv("data/order_items_dataset.csv")
-        products = pd.read_csv("data/products_dataset.csv")
-        translations = pd.read_csv("data/product_category_name_translation.csv")
-        items_products = order_items.merge(products[['product_id', 'product_category_name']], on='product_id', how='left')
-        items_products = items_products.merge(translations, on='product_category_name', how='left')
-        items_products['product_category_name_english'].fillna('other', inplace=True)
-        return items_products
+        return pd.read_csv("dashboard/category_revenue.csv")
 
-    items_products = get_category_data()
-    cat_revenue = items_products.groupby('product_category_name_english')['price'].sum().sort_values(ascending=False).head(10)
+    cat_data = get_category_data()
+    cat_revenue = cat_data.set_index('category')['revenue']
 
     fig2, ax = plt.subplots(figsize=(12, 5))
     colors = sns.color_palette('Blues_r', 10)
