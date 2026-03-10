@@ -207,8 +207,10 @@ with tab1:
     ax.barh(cat_revenue.index[::-1], cat_revenue.values[::-1], color=colors[::-1])
     ax.set_xlabel('Total Revenue (BRL)')
     ax.set_title('Top 10 Kategori Produk berdasarkan Revenue', fontsize=14, fontweight='bold')
+    max_val = cat_revenue.values.max()
     for i, v in enumerate(cat_revenue.values[::-1]):
-        ax.text(v + 5000, i, f'R${v:,.0f}', va='center', fontsize=9)
+        ax.text(v + max_val * 0.01, i, f'R${v:,.0f}', va='center', fontsize=9)
+    ax.set_xlim(right=max_val * 1.25)
     plt.tight_layout()
     st.pyplot(fig2)
 
@@ -246,8 +248,10 @@ with tab2:
         ax.barh(segment_counts.index[::-1], segment_counts.values[::-1], color=colors)
         ax.set_xlabel('Jumlah Pelanggan')
         ax.set_title('Distribusi Segmen Pelanggan', fontsize=14, fontweight='bold')
+        max_val = segment_counts.values.max()
         for i, v in enumerate(segment_counts.values[::-1]):
-            ax.text(v + 100, i, f'{v:,} ({v/rfm_df.shape[0]*100:.1f}%)', va='center', fontsize=9)
+            ax.text(v + max_val * 0.02, i, f'{v:,} ({v/rfm_df.shape[0]*100:.1f}%)', va='center', fontsize=9)
+        ax.set_xlim(right=max_val * 1.35)
         plt.tight_layout()
         st.pyplot(fig3)
 
@@ -340,8 +344,10 @@ with tab3:
         ax.barh(state_data['customer_state'][::-1], state_data['total_orders'][::-1], color=colors[::-1])
         ax.set_title('Jumlah Pesanan per State', fontsize=13, fontweight='bold')
         ax.set_xlabel('Jumlah Pesanan')
+        max_val = state_data['total_orders'].max()
         for i, v in enumerate(state_data['total_orders'][::-1].values):
-            ax.text(v + 100, i, f'{v:,}', va='center', fontsize=9)
+            ax.text(v + max_val * 0.01, i, f'{v:,}', va='center', fontsize=9)
+        ax.set_xlim(right=max_val * 1.2)
         plt.tight_layout()
         st.pyplot(fig5)
 
@@ -351,8 +357,10 @@ with tab3:
         ax.barh(state_data['customer_state'][::-1], state_data['total_revenue'][::-1], color=colors[::-1])
         ax.set_title('Revenue per State (BRL)', fontsize=13, fontweight='bold')
         ax.set_xlabel('Revenue (BRL)')
+        max_val = state_data['total_revenue'].max()
         for i, v in enumerate(state_data['total_revenue'][::-1].values):
-            ax.text(v + 5000, i, f'R${v:,.0f}', va='center', fontsize=9)
+            ax.text(v + max_val * 0.01, i, f'R${v:,.0f}', va='center', fontsize=9)
+        ax.set_xlim(right=max_val * 1.25)
         plt.tight_layout()
         st.pyplot(fig6)
 
